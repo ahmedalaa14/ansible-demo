@@ -1,0 +1,37 @@
+- name: Update apt cache
+  apt:                  # name of the module
+    update_cache: yes
+
+- name: Install nginx
+  apt:                  # name of the module
+    name: nginx
+    state: present
+
+- name: create directory
+  file:
+    path: "{{ dir_name }}"
+    state: directory
+
+- name: List files in the directory
+  command: "ls {{dir_name}}"
+  register: results
+
+- name: print the stdout
+  debug:
+    var: results.stdout 
+
+- name: copy template    
+  template:
+    src: myconfig
+    dest: myconfig
+  notify: restart nginx
+
+- name: create user x
+  user:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - ahmed
+    - mohamed
+    - ali
+    - ansible
