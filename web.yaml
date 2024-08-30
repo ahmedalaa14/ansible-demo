@@ -1,0 +1,32 @@
+---
+- hosts: web
+  remote_user: ubuntu
+  become: yes   # to run the tasks as root
+  tasks:
+    - name: Update apt cache
+      apt:                  # name of the module
+        update_cache: yes
+    - name: Install nginx
+      apt:                  # name of the module
+        name: nginx
+        state: present
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
