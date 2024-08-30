@@ -2,60 +2,12 @@
 - hosts: web
   remote_user: ubuntu
   become: yes   # to run the tasks as root
-  vars:
-    -dir_name: test
-    -myname: ahmed
   vars_prompt:
      - name: password
        prompt: "Enter the password"
        private: yes # to hide the password
-
-  tasks:
-    - name: Update apt cache
-      apt:                  # name of the module
-        update_cache: yes
-
-    - name: Install nginx
-      apt:                  # name of the module
-        name: nginx
-        state: present
-
-    - name: create directory
-      file:
-        path: "{{ dir_name }}"
-        state: directory
-
-    - name: 
-        command: "ls {{dir_name}}"
-        register: results
-
-    - name: print the stdout
-      debug:
-        var: results.stdout 
-
-    - name: copy template    
-      template:
-        src: myconfig
-        dest: myconfig
-      notify: restart nginx
-
-    - name: create user x
-      user:
-        name: "{{ item }}"
-        state: present
-      with_items:
-        - ahmed
-        - mohamed
-        - ali
-        - ansible
-
-  handerls:
-    - name: restart nginx
-      service:
-        name: nginx
-        state: restarted      
-
-
+  roles:
+    - web
 
 
 
